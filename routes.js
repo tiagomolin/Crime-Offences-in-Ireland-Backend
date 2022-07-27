@@ -41,6 +41,19 @@ app.get("/crimes", async (request, response) => {
   const { initial_period_number, final_period_number, categories } =
     request.body;
 
+  //tests if the request body variables are empty
+  if (
+    initial_period_number === "" ||
+    final_period_number === "" ||
+    categories === ""
+  ) {
+    response
+      .status(400)
+      .send(
+        "Request body is empty. Please inform the initial and final period number and the categories"
+      );
+  }
+
   var categories_list = [];
   //checks if the categories array is empty
   if (categories.length > 0) {
