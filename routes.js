@@ -36,10 +36,24 @@ app.get("/periods", async (request, response) => {
 });
 
 //Crimes - gets the first 10 rows of the crime table grouping by division and filtering period and category
-app.get("/crimes", async (request, response) => {
+//using post to send the period and category as body
+app.post("/crimes", async (request, response) => {
   //gets the body of the request
   const { initial_period_number, final_period_number, categories } =
-    request.body;
+    request.body.data;
+
+  if (!request.body) {
+    return response.status(400).send("Please provide a body");
+
+    //returns the 400 status code and the error message
+  }
+  if (!initial_period_number || !final_period_number || !categories) {
+    return response
+      .status(400)
+      .send(
+        "Request body is empty. Please inform the initial and final period number and the categories"
+      );
+  }
 
   //tests if the request body variables are empty
   if (
