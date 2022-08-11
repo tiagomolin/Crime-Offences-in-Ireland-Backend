@@ -2,4 +2,8 @@
 
 Developed in Node.js using express
 
-To install all dependencies use Yarn version 1.22 and execute "yarn install"
+Pre-requirements
+-Node.js 14.15
+-Yarn 1.22
+
+To install all dependencies, fork the project and run command "yarn install".
