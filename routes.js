@@ -1,6 +1,14 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const { Category, Division, Period, Crime } = require("./models");
 const app = express();
+
+app.use((request, response, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    return response.status(503).json({ error: "Database is unavailable" });
+  }
+  next();
+});
 
 //Categories
 app.get("/categories", async (request, response) => {
@@ -200,3 +208,4 @@ app.post("/crimes_period", async (request, response) => {
 });
 
 module.exports = app;
+
