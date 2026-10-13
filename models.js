@@ -23,6 +23,9 @@ const DivisionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  coordinates: {
+    type: [[Number]],
+  },
 });
 
 const PeriodSchema = new mongoose.Schema({
@@ -45,6 +48,14 @@ const PeriodSchema = new mongoose.Schema({
 });
 
 const CrimeSchema = new mongoose.Schema({
+  category: {
+    type: String,
+    required: true,
+  },
+  period_number: {
+    type: Number,
+    required: true,
+  },
   division_number: {
     type: Number,
     required: true,
@@ -61,3 +72,4 @@ const Period = mongoose.model("Period", PeriodSchema);
 const Crime = mongoose.model("Crime", CrimeSchema);
 
 module.exports = { Category, Division, Period, Crime };
+
