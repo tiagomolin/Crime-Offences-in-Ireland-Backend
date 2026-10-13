@@ -17,9 +17,9 @@ app.use(
 
 mongoose.connect(
   "mongodb+srv://" +
-    process.env.DB_USER +
+    encodeURIComponent(process.env.DB_USER) +
     ":" +
-    process.env.DB_PASSWORD +
+    encodeURIComponent(process.env.DB_PASSWORD) +
     "@" +
     process.env.DB_CLUSTER +
     ".mongodb.net/?retryWrites=true&w=majority",
@@ -27,7 +27,9 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }
-);
+).catch((error) => {
+  console.error("MongoDB connection failed:", error.message);
+});
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
@@ -37,8 +39,10 @@ db.once("open", function () {
 
 app.use(Router);
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Server is running at port " + process.env.PORT || 3000);
+const port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", () => {
+  console.log("Server is running at port " + port);
 });
 
 ////
+
